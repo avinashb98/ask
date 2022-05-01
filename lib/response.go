@@ -3,6 +3,7 @@ package lib
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
 type Response struct {
@@ -25,5 +26,10 @@ func (r *Response) Print() {
 	fmt.Println("----------------------")
 	fmt.Println("Body")
 	fmt.Println(r.Body.(string))
+	fmt.Println("")
+
+	fmt.Println("----------------------")
+	fmt.Println("Request took")
+	fmt.Printf("%s ms", strconv.FormatInt(r.TimeTaken, 10))
 	fmt.Println("")
 }

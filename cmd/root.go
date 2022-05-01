@@ -1,20 +1,18 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/avinashb98/ask/lib"
 	"github.com/spf13/cobra"
-	"log"
 	"os"
 )
 
 var input = Input{}
 
 var rootCmd = &cobra.Command{
-	Use:   "ask",
+	Use:   "ask (GET)[POST] [URL] [-H] [-d]",
 	Short: "Ask is cli-based http client built with go",
 	Args:  cobra.MinimumNArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) > 2 {
 			panic("more than 2 arguments passed")
 		}
@@ -27,21 +25,22 @@ var rootCmd = &cobra.Command{
 
 		err := input.Validate()
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 
 		request, err := ParseInputToRequest(input)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 
-		request.Print()
+		//request.Print()
 
 		response, err := lib.ExecuteRequest(request)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 		response.Print()
+		return nil
 	},
 }
 
@@ -52,7 +51,6 @@ func init() {
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
 		os.Exit(1)
 	}
 }

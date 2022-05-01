@@ -76,6 +76,7 @@ Status: 200
 # LLD
 
 ```
+
 type Request struct {
   URL *net.URL
   Headers map[string]string
@@ -95,6 +96,8 @@ type Response struct {
 
 func (r *Response) Print() {}
 
+func ExecuteRequest(r Request) (Response, error) {}
+
 func main() {
   cmd.Execute()
 }
@@ -108,6 +111,20 @@ func Execute() {
 
   execution()
 }
+```
+
+## Folder Structure
+```
+cmd
+    root.go     // root command
+    input.go    // input data structure to store
+    parser.go   // parses input into the input struct
+lib
+    request.go  // request structs and methods
+    response.go // response structs and methods
+    http.go     // make requests
+
+main.go
 ```
 
 # Good To Have Features

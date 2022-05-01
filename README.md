@@ -9,6 +9,12 @@ CLI-Based HTTP Client in Go
 - GET and POST requests
 - For JSON requests, the request body is assumed to be JSON
 
+# Installation
+1. `git clone https://github.com/avinashb98/ask`
+2. `cd ask`
+3. `go mod tidy`
+4. `go install`
+
 # Usage
 
 ```

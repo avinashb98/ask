@@ -13,6 +13,8 @@ type Input struct {
 	Body    string
 }
 
+var validMethods = []string{"GET", "POST"}
+
 func (i Input) Validate() error {
 	var err error
 	err = i.validateMethod()
@@ -40,7 +42,21 @@ func (i Input) Validate() error {
 func (i Input) validateURL() error {
 	validURLProtocols := []string{"https", "http"}
 	if i.URL == "" {
+
 		return fmt.Errorf("url cannot be empty")
+	}
+
+	methodPassed := false
+	for _, method := range validMethods {
+		trimmedUrl := strings.TrimSpace(i.URL)
+		if method == strings.ToUpper(trimmedUrl) {
+			methodPassed = true
+			break
+		}
+	}
+
+	if methodPassed {
+		return fmt.Errorf("url is required")
 	}
 
 	isValidProtocol := false
@@ -70,7 +86,7 @@ func (i Input) validateBody() error {
 }
 
 func (i Input) validateMethod() error {
-	validMethods := []string{"GET", "POST"}
+
 	if i.Method == "" {
 		return nil
 	}
